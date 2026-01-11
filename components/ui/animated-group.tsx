@@ -1,6 +1,6 @@
 'use client';
 import { ReactNode } from 'react';
-import { motion, Variants } from 'motion/react';
+import { motion, Variants, HTMLMotionProps } from 'motion/react';
 import React from 'react';
 
 export type PresetType =
@@ -15,6 +15,8 @@ export type PresetType =
   | 'rotate'
   | 'swing';
 
+type MotionTag = 'div' | 'span' | 'ul' | 'ol' | 'li' | 'section' | 'article' | 'main' | 'header' | 'footer' | 'nav' | 'aside' | 'p';
+
 export type AnimatedGroupProps = {
   children: ReactNode;
   className?: string;
@@ -23,8 +25,8 @@ export type AnimatedGroupProps = {
     item?: Variants;
   };
   preset?: PresetType;
-  as?: React.ElementType;
-  asChild?: React.ElementType;
+  as?: MotionTag;
+  asChild?: MotionTag;
 };
 
 const defaultContainerVariants: Variants = {
@@ -100,6 +102,17 @@ const addDefaultVariants = (variants: Variants) => ({
   visible: { ...defaultItemVariants.visible, ...variants.visible },
 });
 
+// Pre-create motion components outside of render to avoid the "components created during render" error
+const MotionContainer = ({ tag, ...props }: { tag: MotionTag } & Record<string, unknown>) => {
+  const Component = motion[tag] as React.ComponentType<Record<string, unknown>>;
+  return <Component {...props} />;
+};
+
+const MotionItem = ({ tag, ...props }: { tag: MotionTag } & Record<string, unknown>) => {
+  const Component = motion[tag] as React.ComponentType<Record<string, unknown>>;
+  return <Component {...props} />;
+};
+
 function AnimatedGroup({
   children,
   className,
@@ -115,28 +128,20 @@ function AnimatedGroup({
   const containerVariants = variants?.container || selectedVariants.container;
   const itemVariants = variants?.item || selectedVariants.item;
 
-  const MotionComponent = React.useMemo(
-    () => motion.create(as as keyof JSX.IntrinsicElements),
-    [as]
-  );
-  const MotionChild = React.useMemo(
-    () => motion.create(asChild as keyof JSX.IntrinsicElements),
-    [asChild]
-  );
-
   return (
-    <MotionComponent
+    <MotionContainer
+      tag={as}
       initial='hidden'
       animate='visible'
       variants={containerVariants}
       className={className}
     >
       {React.Children.map(children, (child, index) => (
-        <MotionChild key={index} variants={itemVariants}>
+        <MotionItem tag={asChild} key={index} variants={itemVariants}>
           {child}
-        </MotionChild>
+        </MotionItem>
       ))}
-    </MotionComponent>
+    </MotionContainer>
   );
 }
 
