@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const InfrastructureGrid = ({ className }: { className?: string }) => {
-  // Define schematic paths
+  // Define schematic paths for the flowing lines
   const paths = [
     // Horizontal-ish paths
     {
@@ -44,16 +44,24 @@ export const InfrastructureGrid = ({ className }: { className?: string }) => {
         d: "M-100 300 H 100 l 40 -40 V 100 l 40 -40 H 1300",
         color: "#FEF8E8",
         duration: 20,
-        delay: 4
+        delay: 4,
     },
     {
         d: "M1300 550 H 1000 l -40 40 V 800",
         color: "#F44A22",
         duration: 12,
         delay: 6,
-        reverse: true
+        reverse: true,
     }
+  ];
 
+  // Static labels scattered around the grid
+  const labels = [
+    { x: 260, y: 140, text: "<< 01010", color: "#A8AAAC" },
+    { x: 820, y: 180, text: "PKT_RCV", color: "#F44A22" },
+    { x: 160, y: 600, text: "NET.WRK", color: "#A8AAAC" },
+    { x: 1050, y: 530, text: "RTX_ON", color: "#F44A22" },
+    { x: 300, y: 250, text: "0X11", color: "#333" }, // Subtler one
   ];
 
   return (
@@ -66,12 +74,13 @@ export const InfrastructureGrid = ({ className }: { className?: string }) => {
         className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:200px_200px] opacity-50"
       />
 
-      {/* 2. SVG Layer for Transport Lines */}
+      {/* 2. SVG Layer for Transport Lines & Labels */}
       <svg 
         className="absolute inset-0 w-full h-full" 
         viewBox="0 0 1200 800" 
         preserveAspectRatio="xMidYMid slice"
       >
+        {/* Animated Lines */}
         {paths.map((path, index) => (
           <CircuitLine 
             key={index}
@@ -81,6 +90,26 @@ export const InfrastructureGrid = ({ className }: { className?: string }) => {
             delay={path.delay}
             reverse={path.reverse}
           />
+        ))}
+
+        {/* Static Labels */}
+        {labels.map((label, index) => (
+            <g key={index} transform={`translate(${label.x}, ${label.y})`}>
+                 {/* Tiny decorative marker next to text */}
+                <rect x="-4" y="3" width="2" height="2" fill={label.color} opacity="0.8" />
+                <text 
+                    x="0" 
+                    y="0" 
+                    fill={label.color} 
+                    fontSize="10" 
+                    fontFamily="monospace"
+                    fontWeight="bold"
+                    opacity="0.7"
+                    alignmentBaseline="middle"
+                >
+                    {label.text}
+                </text>
+            </g>
         ))}
         
         {/* Static decorative elements/nodes */}
@@ -124,7 +153,7 @@ const CircuitLine = ({
         className="opacity-20"
       />
 
-      {/* Moving Packet */}
+      {/* Moving Packet (Trail) */}
       <motion.path
         d={d}
         stroke={color}
@@ -145,8 +174,30 @@ const CircuitLine = ({
         }}
         className="filter blur-[1px]" // Glow effect
       />
-      
-      {/* Second faint packet trailing behind? Optional. */}
+
+      {/* Head with Arrow only (No text) */}
+      <g style={{ offsetPath: `path('${d}')` } as React.CSSProperties}>
+          <motion.g
+            initial={{ offsetDistance: reverse ? "100%" : "0%", opacity: 0 }}
+            animate={{ 
+              offsetDistance: reverse ? "0%" : "100%",
+              opacity: [0, 1, 1, 0] 
+            }}
+            transition={{
+              duration: duration,
+              repeat: Infinity,
+              ease: "linear",
+              delay: delay,
+              repeatDelay: 2
+            }}
+            style={{
+                offsetRotate: reverse ? "auto 180deg" : "auto", 
+            } as React.CSSProperties}
+          >
+            {/* Arrow Head */}
+            <path d="M -6 -4 L 0 0 L -6 4" fill="none" stroke={color} strokeWidth="2" />
+          </motion.g>
+      </g>
     </>
   );
 };
