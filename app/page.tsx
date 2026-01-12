@@ -12,7 +12,11 @@ export default function Home() {
         SHPYRD
       </h1>
       <p className="text-xl text-[#A8AAAC] mb-8 max-w-lg">
-        Connect. Create. Innovate. The premier platform for student talent and leading companies.
+        Connecting student builders with world-class companies.
+      </p>
+
+      <p className="font-bold text-2xl text-[#FEF8E8] mb-4 max-w-lg">
+        Join the cohort.
       </p>
 
       {/* Input/Button Group would go here */}
