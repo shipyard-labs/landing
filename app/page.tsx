@@ -10,10 +10,10 @@ export default function Home() {
     {/* Content Layer (Ensure z-index is higher) */}
     <div className="relative z-10 flex flex-col items-center text-center max-w-4xl px-4 gap-8">
       <div className="flex flex-col items-center gap-6">
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-[#FEF8E8]">
-          SHPYRD
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-[#F0EAD6]">
+          SHPYRD: <span className="text-[#A8AAAC] font-normal opacity-80" style={{ letterSpacing: "0.01em" }}>A HACKATHON & TALENT PLATFORM</span>
         </h1>
-        <p className="text-xl text-[#A8AAAC] max-w-lg leading-relaxed">
+        <p className="text-xl text-[#515153] max-w-lg leading-relaxed">
           Connecting student builders with world-class companies.
         </p>
       </div>
