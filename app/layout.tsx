@@ -34,7 +34,7 @@ export default function RootLayout({
       <body
         className={`${nunitoSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="min-h-dvh bg-[#161616]">
+        <div className="min-h-dvh bg-[#0A0A0A]">
           <Toaster />
           {children}
         </div>
