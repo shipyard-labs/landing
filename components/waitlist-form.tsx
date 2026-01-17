@@ -29,7 +29,7 @@ export function WaitlistForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit as React.FormEventHandler<HTMLFormElement>} className="flex flex-col md:flex-row gap-2 w-full max-w-md">
+    <form onSubmit={handleSubmit as React.FormEventHandler<HTMLFormElement>} className="flex flex-col md:flex-row gap-2 w-full max-w-md px-6 md:px-0">
       <Input
         type="email"
         placeholder="Enter your email"

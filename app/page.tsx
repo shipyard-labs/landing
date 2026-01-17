@@ -14,13 +14,13 @@ export default function Home() {
           SHPYRD
         </h1>
         <span className="text-[#A8AAAC] text-4xl font-normal opacity-80" style={{ letterSpacing: "0.01em" }}>A HACKATHON & TALENT PLATFORM</span>
-        <p className="text-xl text-[#515153] leading-relaxed">
-          Connecting student builders with world-class companies.
+        <p className="text-xl text-[#515153] leading-relaxed px-6 md:px-0">
+          Connecting student builders <br className="md:hidden" />with world-class companies.
         </p>
       </div>
 
-      <div className="flex flex-col items-center gap-4 w-full">
-        <p className="font-bold text-2xl text-[#FEF8E8]">
+      <div className="flex flex-col items-center gap-6 w-full">
+        <p className="font-bold text-2xl text-[#FEF8E8] ">
           Join the cohort.
         </p>
 
