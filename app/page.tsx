@@ -2,7 +2,7 @@ import { InfrastructureGrid } from "@/components/infrastructure-grid";
 import { WaitlistForm } from "@/components/waitlist-form";
 
 export default function Home() {
-  return (<main className="relative h-dvh flex flex-col items-center justify-center bg-[#161616] overflow-hidden">
+  return (<main className="relative h-full flex flex-col items-center justify-center bg-[#161616] overflow-hidden">
 
     {/* Background Layer */}
     <InfrastructureGrid />
