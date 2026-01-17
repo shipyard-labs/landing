@@ -18,6 +18,12 @@ export const metadata: Metadata = {
   description: "SHPYRD is where the future of work meets the future of education through hackathons and real-world projects."
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,8 +34,10 @@ export default function RootLayout({
       <body
         className={`${nunitoSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster />
-        {children}
+        <div className="min-h-dvh bg-[#161616]">
+          <Toaster />
+          {children}
+        </div>
       </body>
     </html>
   );

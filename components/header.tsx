@@ -25,7 +25,7 @@ export const HeroHeader = () => {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
     return (
-        <header>
+        <header className="pt-[env(safe-area-inset-top)]">
             <nav
                 data-state={menuState && 'active'}
                 className="fixed z-20 w-full px-2">
