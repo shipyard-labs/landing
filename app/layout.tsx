@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body
         className={`${nunitoSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster />
         {children}
       </body>
     </html>

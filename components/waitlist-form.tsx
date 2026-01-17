@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
+import { toast } from "sonner"
 
 export function WaitlistForm() {
   const [email, setEmail] = useState("");
@@ -18,10 +19,12 @@ export function WaitlistForm() {
     // Don't use .select() - no need to read back the data
 
     if (status === 201) {
-      console.log("Email added to waitlist successfully");
+      toast.success("Email added to waitlist successfully");
       setEmail(""); // Clear the email field
-    } else if (error) {
-      console.error("Error adding email to waitlist:", error);
+    } else if (status === 409 && error?.message.includes('unique_email')) {
+      toast.error("Email already exists in waitlist");
+    } else {
+      toast.error("Error adding email to waitlist: " + error?.message);
     }
   }
 
